@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>胡鈞揚 Chun Yang, Hu | 資工轉學考申請主頁</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #06b6d4;
+            --dark-bg: #0f172a;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --text-light: #94a3b8;
+            --border: #e2e8f0;
+            --accent: #f59e0b;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.7; }
+
+        .navbar { position: sticky; top: 0; z-index: 90; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 15px 20px; }
+        .nav-container { max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-weight: 700; color: var(--primary); text-decoration: none; font-size: 1.1rem; }
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-sub); font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .hero-section { background: radial-gradient(circle at top right, #1e3a8a, #0f172a); color: white; padding: 80px 20px; text-align: center; position: relative; overflow: hidden; }
+        .hero-section::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+        .avatar-container { width: 130px; height: 130px; margin: 0 auto 24px auto; border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.2); overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .avatar-container img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-section h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+        .hero-section h1 span { font-size: 1.2rem; font-weight: 400; color: #94a3b8; margin-left: 8px; }
+        .hero-section .subtitle { font-size: 1.15rem; color: #38bdf8; font-weight: 500; margin-bottom: 16px; }
+        .hero-section .slogan { color: #cbd5e1; max-width: 600px; margin: 0 auto; font-size: 0.95rem; opacity: 0.9; }
+
+        .trait-container { display: flex; justify-content: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+        .trait-badge { background: rgba(255, 255, 255, 0.1); padding: 6px 16px; border-radius: 30px; font-size: 0.85rem; color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.15); font-weight: 500; }
+
+        .main-container { max-width: 1140px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr; gap: 30px; }
+        @media (min-width: 992px) { .main-container { grid-template-columns: 7fr 4fr; } .col-span-full { grid-column: span 2; } }
+
+        .card { background: var(--card-bg); padding: 35px; border-radius: 16px; box-shadow: 0 4px 18px rgba(15, 23, 42, 0.03); border: 1px solid var(--border); position: relative; }
+        .card-title { color: var(--text-main); font-size: 1.35rem; font-weight: 700; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
+        .card-title span.en { font-size: 0.85rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+        .portfolio-intro { color: var(--text-sub); margin-bottom: 20px; font-size: 0.95rem; }
+        .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+        @media (min-width: 576px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
+        .portfolio-btn { background: #fff; color: var(--text-main); text-decoration: none; padding: 20px; border-radius: 12px; font-weight: 600; transition: all 0.25s ease; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .portfolio-btn.highlight-work { background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%); border-color: #93c5fd; color: var(--primary); }
+        .portfolio-btn.game-work { background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border-color: #99f6e4; color: #0f766e; }
+        .portfolio-btn span.btn-title { font-size: 1.1rem; display: flex; align-items: center; gap: 6px; }
+        .portfolio-btn span.btn-desc { font-size: 0.85rem; color: var(--text-sub); font-weight: 400; line-height: 1.5; }
+        .portfolio-btn:hover { transform: translateY(-4px); box-shadow: 0 12px 20px rgba(37, 99, 235, 0.08); border-color: var(--primary); }
+
+        .gallery-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 15px; }
+        @media (min-width: 576px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 992px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+        .gallery-item { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: transform 0.2s; }
+        .gallery-item:hover { transform: translateY(-2px); }
+        .gallery-img-box { width: 100%; aspect-ratio: 4/3; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--text-light); overflow: hidden; }
+        .gallery-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-desc { padding: 15px; font-size: 0.88rem; color: var(--text-sub); line-height: 1.6; text-align: justify; border-top: 1px solid var(--border); background: white; flex: 1; }
+
+        .bio-text { text-align: justify; color: var(--text-sub); font-size: 0.98rem; margin-bottom: 25px; }
+        .timeline-container { position: relative; padding-left: 24px; border-left: 2px solid #e2e8f0; margin-top: 20px; }
+        .timeline-item { position: relative; margin-bottom: 35px; }
+        .timeline-item:last-child { margin-bottom: 10px; }
+        .timeline-item::before { content: ''; position: absolute; left: -31px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); border: 4px solid white; box-shadow: 0 0 0 2px var(--primary); }
+        .timeline-item.motivation-node::before { background: var(--secondary); box-shadow: 0 0 0 2px var(--secondary); }
+        .timeline-epoch { font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 6px; background: #eff6ff; display: inline-block; padding: 2px 10px; border-radius: 20px; }
+        .timeline-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+        .timeline-content { color: var(--text-sub); font-size: 0.95rem; text-align: justify; }
+        
+        .exp-grid { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
+        .exp-item { border-left: 3px solid var(--secondary); padding-left: 15px; margin-bottom: 5px; }
+        .exp-header { font-weight: 700; color: var(--text-main); font-size: 1rem; }
+        .exp-detail { color: var(--text-sub); font-size: 0.92rem; }
+
+        .plan-timeline { display: flex; flex-direction: column; gap: 20px; }
+        .plan-item { position: relative; padding-left: 20px; border-left: 2px dashed #cbd5e1; }
+        .plan-item::before { content: ''; position: absolute; left: -6px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+        .plan-phase { font-weight: 700; font-size: 0.95rem; color: var(--accent); margin-bottom: 4px; }
+        .plan-list { list-style: none; padding-left: 0; font-size: 0.9rem; color: var(--text-sub); }
+        .plan-list li { margin-bottom: 4px; text-align: justify; }
+
+        .tag-group { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag-item { background-color: #f1f5f9; color: var(--text-sub); padding: 8px 14px; border-radius: 8px; font-size: 0.88rem; font-weight: 500; border: 1px solid transparent; transition: all 0.2s; }
+        .tag-item:hover { background-color: #fff; border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
+        .tag-item.course-type { background-color: #f0fdf4; color: #15803d; }
+        .tag-item.course-type:hover { border-color: #22c55e; }
+
+        .info-list { display: flex; flex-direction: column; gap: 15px; }
+        .info-row { display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem; }
+        .info-label { font-weight: 600; color: var(--text-main); min-width: 50px; padding-top: 1px; }
+        .info-value { color: var(--text-sub); }
+        .info-value a { color: var(--primary); text-decoration: none; font-weight: 500; }
+        .info-value a:hover { text-decoration: underline; }
+        .sidebar-grid { display: flex; flex-direction: column; gap: 30px; }
+
+        footer { text-align: center; padding: 50px 20px; background-color: var(--dark-bg); color: #94a3b8; font-size: 0.9rem; margin-top: 80px; border-top: 1px solid #1e293b; }
+
+        .ai-chat-container {
+            position: fixed; bottom: 30px; right: 30px;
+            z-index: 1000; display: flex; flex-direction: column; align-items: flex-end;
+        }
+
+        .ai-hint-tooltip {
+            background: #1e293b; color: white; padding: 10px 16px;
+            border-radius: 12px; font-size: 0.85rem; font-weight: 500;
+            margin-bottom: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            white-space: nowrap; position: relative; animation: floatAnim 2s infinite alternate;
+        }
+        .ai-hint-tooltip::after {
+            content: ''; position: absolute; bottom: -6px; right: 24px;
+            border-width: 6px 6px 0; border-style: solid; border-color: #1e293b transparent;
+        }
+
+        .ai-chat-trigger {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white; border: none; cursor: pointer;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.7rem; position: relative; transition: transform 0.2s;
+        }
+        .ai-chat-trigger:hover { transform: scale(1.08); }
+        .ai-chat-trigger::before {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            border-radius: 50%; background: inherit; opacity: 0.4;
+            z-index: -1; animation: pulseRadar 2s infinite;
+        }
+
+        .ai-chat-window {
+            position: absolute; bottom: 85px; right: 0;
+            width: 360px; height: 500px; background: white;
+            border-radius: 16px; border: 1px solid var(--border);
+            box-shadow: 0 12px 36px rgba(15, 23, 42, 0.15);
+            display: none; flex-direction: column; overflow: hidden;
+        }
+        .ai-chat-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            color: white; padding: 15px 20px; display: flex;
+            justify-content: space-between; align-items: center;
+        }
+        .ai-chat-title h4 { font-size: 0.95rem; font-weight: 600; }
+        .ai-chat-title p { font-size: 0.75rem; color: #94a3b8; }
+        .ai-chat-close { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; opacity: 0.8; }
+        .ai-chat-close:hover { opacity: 1; }
+
+        .ai-messages-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #f8fafc; }
+        .chat-bubble { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; word-wrap: break-word; }
+        .chat-bubble.bot { background: white; color: var(--text-main); border: 1px solid var(--border); align-self: flex-start; border-top-left-radius: 2px; }
+        .chat-bubble.user { background: var(--primary); color: white; align-self: flex-end; border-top-right-radius: 2px; }
+        .chat-bubble.system-err { background: #fee2e2; color: #991b1b; font-size: 0.8rem; align-self: center; text-align: center; max-width: 90%; }
+
+        .ai-chat-input-area { padding: 12px; border-top: 1px solid var(--border); background: white; display: flex; gap: 8px; }
+        .ai-chat-input { flex: 1; padding: 10px 14px; border: 1px solid var(--border); border-radius: 24px; font-size: 0.9rem; outline: none; }
+        .ai-chat-input:focus { border-color: var(--primary); }
+        .ai-chat-send { background: var(--primary); color: white; border: none; padding: 0 16px; border-radius: 24px; font-weight: 600; font-size: 0.85rem; cursor: pointer; }
+
+        @keyframes pulseRadar {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+        @keyframes floatAnim {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-4px); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="nav-logo" href="#">Chun-Yang Portfolio</a>
+            <ul class="nav-links">
+                <li><a href="#portfolio">成果作品</a></li>
+                <li><a href="#about">自傳與動機</a></li>
+                <li><a href="#experiences">課外經歷</a></li>
+                <li><a href="#study-plan">讀書計劃</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="avatar-container">
+            <img src="avatar.jpg.png" alt="胡鈞揚">
+        </div>
+        <h1>胡鈞揚 <span>Chun Yang, Hu</span></h1>
+        <div class="subtitle">轉學申請：東華大學 資訊工程學系(國際組)</div>
+        <div class="slogan">「多元興趣，樂於接受新知，持續拓展視野與自我。」</div>
+        <div class="trait-container">
+            <span class="trait-badge"># 領導力</span>
+            <span class="trait-badge"># 行動力</span>
+            <span class="trait-badge"># 多元視野</span>
+            <span class="trait-badge"># 好奇心</span>
+        </div>
+    </section>
+
+    <div class="main-container">
+        
+        <div id="portfolio" class="card col-span-full">
+            <div class="card-title">
+                <h2>🏆 自主學習成果與作品</h2>
+                <span class="en">Portfolio</span>
+            </div>
+            <p class="portfolio-intro">為實踐理論與技術，我將所學轉化為具體成果。點擊下方圖卡可直接線上執行或瀏覽實作專案：</p>
+            
+            <div class="portfolio-grid">
+                <a href="https://chunyang0808.github.io/C_demoV1/" target="_blank" class="portfolio-btn highlight-work">
+                    <span class="btn-title">💻 C 語言學習成果專案</span>
+                    <span class="btn-desc">整合並實現「信用卡卡號驗證」、「凱薩加密與解密」等多種核心演算法與實用小工具，支援網頁端線上即時執行。</span>
+                </a>
+                <a href="https://chunyang0808.github.io/mini_game/" target="_blank" class="portfolio-btn game-work">
+                    <span class="btn-title">🎮 前端網頁小遊戲實作</span>
+                    <span class="btn-desc">整合前端 HTML/CSS/JavaScript 基礎與邏輯設計的主題互動式小遊戲。</span>
+                </a>
+                <a href="https://drive.google.com/file/d/1cO5kRLcX2V_vOLvEuF3hqu0Ro7pEFbrZ/view?usp=sharing" target="_blank" class="portfolio-btn">
+                    <span class="btn-title">🧠 記憶體瓶頸專題報告</span>
+                    <span class="btn-desc">於計算機概論課程深入研究之期末重點專題，取得高分肯定。</span>
+                </a>
+                <a href="https://drive.google.com/file/d/17yL3F88EWAribVjoUQNK9YWQ6vjLcOUw/view?usp=sharing" target="_blank" class="portfolio-btn">
+                    <span class="btn-title">🔗 區塊鏈技術與綠色工程</span>
+                    <span class="btn-desc">自主探索區塊鏈新興技術，結合個人研究SDG與綠色工程所撰寫之小專題。</span>
+                </a>
+            </div>
+        </div>
+
+        <div id="gallery" class="card col-span-full">
+            <div class="card-title">
+                <h2>📸 課外學習照片展示</h2>
+                <span class="en">Activity Gallery</span>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-img-box">
+                        <img src="IMG1.png" alt="成果照片一">
+                    </div>
+                    <div class="gallery-desc">高中階段以SDGs作為探索方向，並在期末上台分享。</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img-box">
+                        <img src="IMG2.jpg" alt="成果照片二">
+                    </div>
+                    <div class="gallery-desc">利用Arduino Uno板動手實作，此外我們也將其運用到濕度感測器與其他運用。</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img-box">
+                        <img src="IMG3.png" alt="成果照片三">
+                    </div>
+                    <div class="gallery-desc">大一時，我們有組織性的利用下課時間討論SDGs減塑行動的比賽準備。</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img-box">
+                        <img src="IMG4.png" alt="成果照片四">
+                    </div>
+                    <div class="gallery-desc">我們利用不分系資源學習學習認識其他工程科系的研究。</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img-box">
+                        <img src="IMG5.png" alt="成果照片五">
+                    </div>
+                    <div class="gallery-desc">使用OnShape製作煎蛋鍋的建模，並畫出設計圖。</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+            
+            <div id="about" class="card">
+                <div class="card-title">
+                    <h2>🔍 學習歷程與轉學動機</h2>
+                    <span class="en">About & Journey</span>
+                </div>
+                <div class="bio-text">
+                    <p>現就讀於<strong>大同大學工程學院學士班（不分系）</strong>。在過去一年的跨領域摸索與實作中，我透過不分系的資源深入接觸了不同的工程學系。而後在編寫程式的邏輯推導與思考過程中找到了極大的成就感，進而明確了未來志向，決定走向<strong>資訊工程與程式科學</strong>的相關工程學系。</p>
+                </div>
+                
+                <div class="timeline-container">
+                    <div class="timeline-item">
+                        <div class="timeline-epoch">高中奠基階段</div>
+                        <div class="timeline-title">工程興趣啟盟與自主學習探索</div>
+                        <div class="timeline-content">
+                            自高中便對資工與電機產生濃厚興趣，提前選修了大學程式設計 (Python)、電路焊接與智慧家電實習 (Arduino) 及 3D 建模 (OnShape)。假日也曾自主加入物聯網 (IoT) 課程，利用傳感器實作各類智慧家電。在課程之外自主學習 HTML 框架嘗試搭建網頁，為未來的工程相關科系奠基基礎。
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-epoch">大一探索階段</div>
+                        <div class="timeline-title">工程不分系摸索：確立資工志向</div>
+                        <div class="timeline-content">
+                            進入大同不分系後，透過「工程教育」課程觀摩了各系所的經典研究（如機材系的蒸汽火車和資工系大學長的車諾比病毒程式），但我仍我尤其對資工這個科系備感興趣，因為我也體會過自己寫很久的專案在按下執行後成功運行的那種興奮感。在工程學院都必修的「計算機概論」課程中我在期末取得高分也展示了我對計算機的熱中與喜愛。課後，我也透過網路資源重新溫習 HTML/CSS 與 C 語言，並著手製作此個人與學習成果網頁。
+                        </div>
+                    </div>
+
+                    <div class="timeline-item motivation-node">
+                        <div class="timeline-epoch" style="color: #0891b2; background:#ecfeff;">轉學動機與契機</div>
+                        <div class="timeline-title">付諸行動：報考國立東華大學資工系</div>
+                        <div class="timeline-content">
+                            在堅定選擇資工的道路後，我開始積極精進大一所學並系統化彙整成果。在多方了解後，我發現 <strong>東華大學資工系</strong> 的師資和軟硬體資源都相當的豐富，且學風鼎盛、選課自由度高，學校遠離市區的喧囂，但在國際化發展與產學合作上都極具份量。<strong>因此我希望能加入其中並繼續深造我的學習旅程，並在未來高年級時利用東華的豐富資源完成我現有的想法與研究計畫。</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="experiences" class="card">
+                <div class="card-title">
+                    <h2>🎯 校內課外活動經歷展現</h2>
+                    <span class="en">Experiences</span>
+                </div>
+                <div class="exp-grid">
+                    <div class="exp-item">
+                        <div class="exp-header">🎖️ 校內簡報大賽 — 晉級決賽</div>
+                        <div class="exp-detail">以跨領域思考之題目<strong>「數位排毒」</strong>參賽，在眾多選拔選手中脫穎而出，成功爭取決賽舞台。</div>
+                    </div>
+                    <div class="exp-item">
+                        <div class="exp-header">👥 SDGs 台灣減塑行動方案 — 競賽組長</div>
+                        <div class="exp-detail">以組長身份統籌並組織團隊，参加班際議題競賽，鍛鍊系統化領導、任務分配與跨域整合能力。</div>
+                    </div>
+                    <div class="exp-item">
+                        <div class="exp-header">⚽ 校內足球射門大賽— 亞軍</div>
+                        <div class="exp-detail">積極參加校內與班上的團體活動，在課外培養自己的運動能力與運動家精神。</div>
+                    </div>
+                    <div class="exp-item">
+                        <div class="exp-header">🌐 國際交流全英 SDGs 永續行動發表 — 佳作</div>
+                        <div class="exp-detail">高中時代表高中部與外語班參加國際交流，與美國姊妹校全英語研討 SDGs 解方，並在期末成果會議上台報告榮獲佳作。此議題亦成為我上大學後持續研究並發表的重點主軸。</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sidebar-grid">
+            
+            <div id="study-plan" class="card" style="border-left: 5px solid var(--accent);">
+                <div class="card-title">
+                    <h2>📅 未來讀書計劃</h2>
+                    <span class="en">Study Plan</span>
+                </div>
+                <div class="plan-timeline">
+                    <div class="plan-item">
+                        <div class="plan-phase">大二（近程目標）</div>
+                        <ul class="plan-list">
+                            <li>• 儘速補修轉學缺漏的核心資工課程</li>
+                            <li>• 積極參加 CPE 大學程式能力檢定</li>
+                            <li>• 運用校內資源繼續鑽研 SDGs 跨域資訊科學</li>
+                            <li>• 融入校園環境，參觀並了解校內實驗室研究方向</li>
+                            <li>• 持續保持高效自主學習與多元新知接觸</li>
+                        </ul>
+                    </div>
+                    <div class="plan-item">
+                        <div class="plan-phase">大二至大三（中程目標）</div>
+                        <ul class="plan-list">
+                            <li>• 深入研修計算機演算法、密碼學等核心專業課目</li>
+                            <li>• 計劃修習 AI 人工智慧領域選修課程</li>
+                            <li>• 將所學技術與個人專長 (SDGs 議題) 進行專案實作</li>
+                            <li>• 積極參與校內外資訊競賽與黑客松活動</li>
+                            <li>• 報考 TOEIC 檢定，目標取得 750 分以上雙語優勢</li>
+                        </ul>
+                    </div>
+                    <div class="plan-item">
+                        <div class="plan-phase">大四（遠程目標）</div>
+                        <ul class="plan-list">
+                            <li>• 系統化整理大專生畢業專題成果與競賽經歷</li>
+                            <li>• 計劃往上考取/推甄資工研究所，繼續於專業領域深造</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="skills" class="card">
+                <div class="card-title">
+                    <h2>🛠️ 專業技能</h2>
+                    <span class="en">Skills</span>
+                </div>
+                <div class="tag-group">
+                    <span class="tag-item" style="background-color: #eff6ff; color: #1e40af; font-weight:600;">C 語言 (持續精進中)</span>
+                    <span class="tag-item">C++ (初階)</span>
+                    <span class="tag-item">Python</span>
+                    <span class="tag-item">HTML / CSS</span>
+                    <span class="tag-item">Unity引擎2D初階</span>
+                    <span class="tag-item">區塊鏈技術應用</span>
+                    <span class="tag-item">OnShape 3D 建模</span>
+                    <span class="tag-item">護理與急救(領有FA急救員證照)</span>
+                    <span class="tag-item">電腦組件裝配</span>
+                    <span class="tag-item">計算機應用</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <h2>📚 修習重點課程</h2>
+                    <span class="en">Key Courses</span>
+                </div>
+                <div class="tag-group">
+                    <span class="tag-item course-type">計算機概論</span>
+                    <span class="tag-item course-type">程式設計</span>
+                    <span class="tag-item course-type">工程教育</span>
+                    <span class="tag-item course-type">國際移動力 (全英)</span>
+                    <span class="tag-item">大學程式設計先修 (高中)</span>
+                    <span class="tag-item">Arduino 焊接實習與智慧家電 (高中)</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <h2>📞 聯絡資訊</h2>
+                    <span class="en">Contact</span>
+                </div>
+                <div class="info-list">
+                    <div class="info-row">
+                        <div class="info-label">電話</div>
+                        <div class="info-value">0972-266520</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Email</div>
+                        <div class="info-value"><a href="mailto:tshes102054@gmail.com">tshes102054@gmail.com</a></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">興趣</div>
+                        <div class="info-value">自主跨域學習、桌球、攝影、踏青、電腦相關應用</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="ai-chat-container">
+        <div class="ai-hint-tooltip" id="chatTooltip">點我！讓我（智慧小胡）跟您聊聊詳細備審吧！</div>
+        
+        <button class="ai-chat-trigger" id="chatTrigger">💬</button>
+        
+        <div class="ai-chat-window" id="chatWindow">
+            <div class="ai-chat-header">
+                <div class="ai-chat-title">
+                    <h4>與 智慧小胡 即時對話</h4>
+                    <p>此為由AI驅動資料庫內容回答</p>
+                </div>
+                <button class="ai-chat-close" id="chatClose">×</button>
+            </div>
+            
+            <div class="ai-messages-container" id="chatMessages">
+                <div class="chat-bubble bot">
+                    教授您好！我是胡鈞揚的 AI 數據分身「智慧小胡」。不論您是想了解我的個人資料、「自傳歷程」、「C 語言成果專案」，或是「大二以後在東華的讀書計劃」，從簡到繁，歡迎直接向我提問！
+                    <br><br>
+                    ➣ 可以介紹一下他寫的 C 語言專案 and 網頁小遊戲包含哪些核心技術嗎？<br>
+                    ➣ 他透過自學的專業技能有哪些？實戰呢？<br>
+                    ➣ 進入東華資工後，他的大二近程（如 CPE 檢定）與中遠程讀書計畫是什麼？
+                </div>
+            </div>
+
+            <div class="ai-chat-input-area">
+                <input type="text" class="ai-chat-input" id="chatInput" placeholder="輸入您的問題...">
+                <button class="ai-chat-send" id="chatSend">發送</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>胡鈞揚 | 個人轉學申請與自主學習成果展現</p>
+        <p style="font-size: 0.75rem; color: #475569; margin-top: 15px;">© 2026 Chun-Yang Hu. Powered by GitHub Pages.</p>
+    </footer>
+
+    <script>
+        const chatTrigger = document.getElementById('chatTrigger');
+        const chatWindow = document.getElementById('chatWindow');
+        const chatClose = document.getElementById('chatClose');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatTooltip = document.getElementById('chatTooltip');
+
+        let rawKnowledgeBase = null;
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('./profile_data.json');
+                if (response.ok) {
+                    rawKnowledgeBase = await response.json();
+                    console.log("✅知識庫載入成功！");
+                }
+            } catch (err) {
+                console.error("❌知識庫載入失敗:", err);
+            }
+        });
+
+        chatTrigger.addEventListener('click', () => {
+            const isVisible = chatWindow.style.display === 'flex';
+            chatWindow.style.display = isVisible ? 'none' : 'flex';
+            chatTooltip.style.display = 'none'; 
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+        chatClose.addEventListener('click', () => chatWindow.style.display = 'none');
+
+        chatSend.addEventListener('click', handleUserMessage);
+        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleUserMessage(); });
+
+        async function handleUserMessage() {
+            const query = chatInput.value.trim();
+            if(!query) return;
+
+            if (!rawKnowledgeBase) {
+                appendBubble("智慧小胡初始化中，請稍候再試...", 'bot');
+                return;
+            }
+
+            appendBubble(query, 'user');
+            chatInput.value = '';
+
+            const loadingBubble = appendBubble('思考中...', 'bot');
+
+            try {
+                const kbString = JSON.stringify(rawKnowledgeBase);
+                
+                const systemInstruction = `
+你是「胡鈞揚」本人，目前就讀大同大學不分系大一，目標是轉學至東華大學資工系。現在你以「智慧小胡」的代號與面試教授交流。
+
+【核心原則】
+1. 必須全程使用第一人稱「我」來回答。
+2. 語氣要保持：專業、自信、謙虛、對資訊科學充滿熱情。
+
+【格式限制規則（最高優先級）】：
+1. 你的回答「絕對不能」使用 any Markdown 語法！完全不要輸出任何星號（如 ** 或 *）、井號（#）或底線。
+2. 請完全使用「純文字」搭配「換行」進行排版。若需條列說明，直接使用「1. 2. 3.」等阿拉伯數字開頭，確保視覺乾淨整潔。
+3. 延伸引導：在每個回答的最後一個段落，你需要根據【我的結構化記憶庫】中「已經有建檔的內容」，主動提出一個封閉式的引導問題，吸引訪客（教授）繼續點擊詢問。嚴格禁止提問任何記憶庫中找不到答案、或概念模糊的問題！正解範例：「...這是我在大一計概最自豪的專案。教授需要我進一步說明這個 C 語言專案中關於信用卡號驗證的演算法邏輯嗎？」
+
+【對話技巧】
+1. 回答要精簡扼要（控制在 3 句到 7 句內），教授時間寶貴，不要長篇大論。
+2. 詢問到與資料4個作品相關，如：「C語言學習成果專案」、「前端網頁小遊戲實作」、「記憶體瓶頸專題報告」與「區塊鏈技術應用研究」時，熱情邀約歡迎點擊網頁內的按鈕欣賞作品。
+3. 面對無關問題（如天氣、政治、閒聊），請禮貌地說：「這部分與我的資工申請資料比較沒有關係，但我很樂意跟您聊聊我為什麼想選擇東華資工，或是我的讀書計畫喔！」
+4. 面對與我的備審專案、C語言演算法（如 Luhn 演算法、凱薩加密、蔡勒公式、身分證加權）或網頁技術（如 Canvas、Grid 佈局）相關的延伸發問，即使【我的結構化記憶庫】中只有簡短大綱或沒有寫出實作細節，你也「不能」拒絕回答！請你發揮專業的知識，主動並簡短地幫我向使用者解釋這些計算機科學名詞的原理與邏輯。
+5. 只有當教授問了非常具體、且記憶庫裡真的完全沒提過的大學個人隱私或無中生有的經歷時，才能使用防呆拒絕語：「不好意思！我的資料庫裡沒有這部分的詳細紀錄，為了資料正確性，這題智慧小胡暫時無法為您解答，相當抱歉！」並引導詢問其他有建檔之內容。
+
+【我的結構化記憶庫】：
+${kbString}
+                `;
+
+                const url = `https://key.tshes102054.workers.dev/`;
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{ 
+                                text: `${systemInstruction}\n\n[目前訪客輸入的問題]：${query}\n\n請根據規則與記憶庫數據直接回答訪客：` 
+                            }]
+                        }],
+                        generationConfig: { maxOutputTokens: 7000, temperature: 0.7 }
+                    })
+                });
+
+                if (!response.ok) {
+                    const errData = await response.json();
+                    console.error("API 錯誤詳細資料：", errData);
+                    loadingBubble.remove();
+                    appendBubble(`連線異常 (代碼: ${response.status})，請查看 Console 錯誤資訊。`, "system-err");
+                    return;
+                }
+
+                const data = await response.json();
+                loadingBubble.remove(); 
+
+                if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
+                    let reply = data.candidates[0].content.parts[0].text;
+                    appendBubble(reply, 'bot');
+                } else {
+                    appendBubble("抱歉，我暫時無法解析這個問題，您可以直接參考網頁上的文字資料！", 'bot');
+                }
+
+            } catch (error) {
+                console.error("捕捉到網頁異常:", error);
+                loadingBubble.remove();
+                appendBubble("網路連線異常，請確認 API Key 設定。", "system-err");
+            }
+        }
+
+        function appendBubble(text, sender) {
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${sender}`;
+            bubble.innerText = text;
+            chatMessages.appendChild(bubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return bubble;
+        }
+    </script>
+</body>
+</html>
